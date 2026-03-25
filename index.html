@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Kind Vault | Dynamic Lock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="glass-container">
+        <section id="entrance-stage">
+            <div class="icon-header">🔒</div>
+            <h1>Greetings, File Seeker!</h1>
+            <p>Tell us your name, then prove your worth.</p>
+            <input type="text" id="user-name" placeholder="E.g., Captain Awesome" autocomplete="off">
+            <button class="primary-btn" onclick="initiatePuzzleStage()">Initialize Trial</button>
+        </section>
+
+        <section id="puzzle-stage" class="hidden">
+            <h2>Watch the Sequence Closely...</h2>
+            <p id="puzzle-status">Get ready!</p>
+            
+            <div class="puzzle-board">
+                <div class="shape red" data-color="0" onclick="handleUserClick(0)"></div>
+                <div class="shape blue" data-color="1" onclick="handleUserClick(1)"></div>
+                <div class="shape green" data-color="2" onclick="handleUserClick(2)"></div>
+                <div class="shape yellow" data-color="3" onclick="handleUserClick(3)"></div>
+            </div>
+            <button id="start-sequence-btn" class="secondary-btn" onclick="playSequence()">Watch Again</button>
+        </section>
+
+        <section id="vault-stage" class="hidden">
+            <header class="vault-header">
+                <h2 id="greeting">Welcome Back!</h2>
+                <span class="status-badge">Unlocked</span>
+            </header>
+            
+            <div class="vault-layout">
+                <aside class="file-list-pane">
+                    <h3>Available Documents</h3>
+                    <div id="file-grid" class="file-grid">
+                        </div>
+                </aside>
+                
+                <main class="viewer-pane">
+                    <h3>Document Preview</h3>
+                    <div id="viewer-container">
+                        <p class="placeholder-text">Select a file from the list to preview.</p>
+                        <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+                        <a id="download-link" href="#" download class="download-btn hidden">📥 Download PDF</a>
+                    </div>
+                </main>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
