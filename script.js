@@ -1,8 +1,10 @@
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz3g6Qvgg2tFqhb2JkTj8BVPjmH24N1Se-oJDJnTk-m333kKJEOmDS6IY19VhRN1z_GtQ/exec";
 
 const fileDatabase = [
-    { id: 1, title: "Java Practical List", category: "Java", description: "All practical codes.", url: "files/Java Practical List.pdf" },
-    { id: 2, title: "Java Algo-Flow", category: "Logic", description: "Flowcharts and Algos.", url: "files/Java Algo-Flow.pdf" }
+    { id: 1, title: "Java Practical List", author: "Nitin", description: "All practical codes.", url: "files/Java Practical List.pdf" },
+    { id: 2, title: "Java Algo-Flow", author: "Nitin", description: "Flowcharts and Algos.", url: "files/Java Nitin Algo Flow.pdf" },
+    { id: 1, title: "Java Practical List", author: "Khushi", description: "All practical codes.", url: "files/khushi java pract.docx" },
+    { id: 2, title: "Java Algo-Flow", author: "Khushi", description: "Flowcharts and Algos.", url: "files/JAVA KHUSHI ALGO-FLOW.pdf" }
 ];
 
 let sequence = [];
@@ -78,14 +80,28 @@ function unlockVault() {
     document.getElementById('puzzle-stage').classList.add('hidden');
     document.getElementById('vault-stage').classList.remove('hidden');
     document.getElementById('greeting').innerText = `Welcome to the Vault, ${localStorage.getItem('vault_user')}!`;
+    
     const grid = document.getElementById('file-grid');
+    grid.innerHTML = ''; // Clear grid to prevent duplicates
+
     fileDatabase.forEach(file => {
         const div = document.createElement('div');
         div.className = 'file-card';
-        div.innerHTML = `<h4>${file.title}</h4><p>${file.description}</p>`;
+        div.innerHTML = `<h4>${file.title}</h4><p>${file.description}</p><p><em>By: ${file.author}</em></p>`;
+        
         div.onclick = () => {
-            document.getElementById('pdf-viewer').src = file.url;
-            document.getElementById('pdf-viewer').style.display = 'block';
+            let displayUrl = file.url;
+
+            // Check if the file is a Word Document
+            if (file.url.toLowerCase().endsWith('.docx') || file.url.toLowerCase().endsWith('.doc')) {
+                // Encode the URL and wrap it in Google's Viewer
+                displayUrl = `https://docs.google.com/gview?url=${encodeURIComponent(window.location.origin + '/' + file.url)}&embedded=true`;
+            }
+
+            const viewer = document.getElementById('pdf-viewer');
+            viewer.src = displayUrl;
+            viewer.style.display = 'block';
+            
             document.querySelector('.placeholder-text').style.display = 'none';
             document.getElementById('download-link').href = file.url;
             document.getElementById('download-link').classList.remove('hidden');
